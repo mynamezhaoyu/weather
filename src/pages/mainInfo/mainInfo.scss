@@ -1,0 +1,64 @@
+.main-info {
+  text-align: center;
+  padding-bottom: 40%;
+  .temperature {
+    // 温度
+    font-size: 120px;
+    line-height: 120px;
+    display: block;
+    &::after {
+      content: 'o';
+      font-size: 60px;
+      line-height: 40px;
+      position: absolute;
+    }
+  }
+  .weather {
+    // 天气
+    font-size: 44px;
+    line-height: 44px;
+    height: 44px;
+  }
+  .animate {
+    // 动画
+    font-size: 28px;
+    margin-top: 20px;
+    height: 28px;
+    position: relative;
+    .list {
+      height: 28px;
+      line-height: 28px;
+      font-size: 28px;
+      color: #fff;
+      position: absolute;
+      width: 100%;
+      display: block;
+      animation: wind-hide 0.75s forwards;
+    }
+    .show {
+      animation-name: wind-show;
+    }
+  }
+  .title {
+    font-size: 32px;
+    margin-top: 10%;
+  }
+}
+@keyframes wind-show {
+  0% {
+    transform: translate3d(0, 28px, 0);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes wind-hide {
+  0% {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, -28px, 0);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,31 @@
+.forecast {
+  background-color: #fff;
+  position: relative;
+  padding: 30px 0;
+  color: #434343;
+  font-size: 30px;
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  ::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 70%;
+    background-color: #f0f0f0;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .item {
+    flex: 1;
+    padding: 20px 30px;
+    .top,
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+    }
+    .top {
+      margin-bottom: 20px;
+    }
+  }
+}
