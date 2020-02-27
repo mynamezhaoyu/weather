@@ -1,4 +1,4 @@
-import Taro, { useState } from '@tarojs/taro';
+import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import Header from '../header/header';
 import MainInfo from '../mainInfo/mainInfo';
@@ -11,6 +11,14 @@ date: 2020-02-25
 */
 function Index() {
   const [bgc, setBac] = useState('background-color: #a3d765');
+  const [newWeather, setNewWeather] = useState({});
+  useEffect(() => {
+    Taro.request({
+      url: 'https://www.wwxinmao.top/api/weather'
+    }).then((res) => {
+      setNewWeather(res.data.item.data);
+    });
+  }, []);
   return (
     <View>
       <View className="index">
@@ -20,10 +28,11 @@ function Index() {
           <View className="pmNum">27</View>
           <View className="pmType">优</View>
         </View>
-        <MainInfo></MainInfo>
+        <MainInfo newWeather={newWeather}></MainInfo>
       </View>
       <Forecast></Forecast>
       <TimeTable></TimeTable>
+      <View>{newWeather}</View>
     </View>
   );
 }
