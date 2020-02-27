@@ -1,12 +1,16 @@
-.time-table {
-  color: aqua;
-  overflow-x: scroll;
-  .child {
-    width: 400%;
-    .item {
-      font-size: 24px;
-      height: 100px;
-      display: inline-block;
-    }
+.scroll {
+  width: 100%;
+  white-space: nowrap;
+  color: #000;
+  padding: 40px 0;
+  background-color: #fff;
+  margin-top: 20px;
+  .list {
+    display: inline-flex;
+    width: 120px;
+    height: 160px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 }
