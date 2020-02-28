@@ -3,25 +3,30 @@ import { View, Text } from '@tarojs/components';
 import './mainInfo.scss';
 function MainInfo(props) {
   const [arr, setArr] = useState(true);
+  const direction = ['微风', '东北风', '东风', '东南风', '南风', '西南风', '西风', '西北风', '北风'];
   let [observe, setObserve] = useState({});
+  let [tips, setTips] = useState({});
   useEffect(() => {
     setTimeout(() => {
       setArr(!arr);
-    }, 2000);
-  },[arr]);
+    }, 3000);
+  }, [arr]);
   useEffect(() => {
-    console.log(props.newWeather.observe);
+    console.log(props.newWeather.tips);
     setObserve(props.newWeather.observe || {});
-  }, [props.newWeather.observe]);
+    setTips(props.newWeather.tips || {});
+  }, [props.newWeather]);
   return (
     <View className="main-info">
-      <Text className="temperature">{observe.degree}</Text>
-      <Text className="weather">{observe.weather}</Text>
+      <View className="temperature">{observe.degree}</View>
+      <View className="weather">{observe.weather}</View>
       <View className="animate">
         <Text className={arr ? 'show list' : 'list'}>湿度 {observe.humidity}%</Text>
-        <Text className={arr ? 'list' : 'show list'}>北风 1级</Text>
+        <Text className={arr ? 'list' : 'show list'}>
+          {direction[observe.wind_direction]} {observe.wind_power}级
+        </Text>
       </View>
-      <View className="title">现在的气温比较凉爽~</View>
+      <View className="title">{tips.observe && tips.observe[0]}</View>
     </View>
   );
 }
