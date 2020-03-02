@@ -43,8 +43,7 @@ function Index() {
         <MainInfo newWeather={newWeather}></MainInfo>
       </View>
       <Forecast newWeather={newWeather}></Forecast>
-      <TimeTable></TimeTable>
-      <View>{newWeather}</View>
+      <TimeTable newWeather={newWeather}></TimeTable>
     </View>
   );
 }

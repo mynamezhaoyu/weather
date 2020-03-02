@@ -1,82 +1,57 @@
 let obj = {
   getIconStr(num) {
-    return this.iconStr[num];
+    let arr = {}
+    if (num) {
+      arr = this.iconStr.filter((r) => r.n === num)[0];
+    }
+    return arr
   },
   iconStr: [
-    { n: '01', name: 'qingtian' },
-    { n: '02', name: 'manyue' },
-    { n: '03', name: 'Group' },
-    { n: '04', name: 'shaoyun' },
-    { n: '05', name: 'canyue' },
-    { n: '06', name: 'baoyu' },
-    { n: '07', name: 'dayu' },
-    { n: '08', name: 'baoxue' },
-    { n: '09', name: 'daxue' },
-    { n: '10', name: 'dayuzhuanqing' },
-    { n: '11', name: 'duoyunzhuanqingtian' },
-    { n: '12', name: 'leizhenyu' },
-    { n: '13', name: 'emeiyue' },
-    { n: '14', name: 'shandian' },
-    { n: '15', name: 'shangxianyue' },
-    { n: '16', name: 'wanduoyun' },
-    { n: '17', name: 'wanqingtian' },
-    { n: '18', name: 'wumai' },
-    { n: '19', name: 'wu' },
-    { n: '20', name: 'tedazhenyu' },
-    { n: '21', name: 'xiaxianyue' },
-    { n: '22', name: 'xiaoxue' },
-    { n: '23', name: 'xiaoyu' },
-    { n: '24', name: 'xinyue' },
-    { n: '25', name: 'yintian' },
-    { n: '26', name: 'zhenyu' },
-    { n: '27', name: 'zhenyuzhuanqing' },
-    { n: '28', name: 'yujiaxue' },
-    { n: '29', name: 'zhongxue' },
-    { n: '30', name: 'zhongyu' },
-    { n: '31', name: 'zhangxianyue' },
-    { n: '32', name: 'Group1' }
-  ],
-  qqIcon: [
-    {
-      n: '00',
-      name: '晴',
-      iconNmae: 'qingtian'
-    },
-    {
-      n: '01',
-      name: '多云',
-      iconNmae: 'Group'
-    },
-    {
-      n: '02',
-      name: '阴',
-      iconNmae: 'yintian'
-    },
-    {
-      n: '07',
-      name: '小雨',
-      iconNmae: 'xiaoyu'
-    },
-    {
-      n: '08',
-      name: '中雨',
-      iconNmae: 'zhongyu'
-    },
-    {
-      n: '13',
-      name: '阵雪',
-      iconNmae: 'zhenxue'
-    },
-    {
-      n: '14',
-      name: '小雪',
-      iconNmae: 'xiaoxue'
-    },
-    {
-      n: '15',
-      name: '中雪',
-      iconNmae: 'zhongxue'
-    }
+    { n: '00', name: '晴', iconNmae: 'qingtian' },
+    { n: '01', name: '多云', iconNmae: 'Group' },
+    { n: '02', name: '阴', iconNmae: 'yintian' },
+    { n: '03', name: '阵雨', iconNmae: 'zhenyu' },
+    { n: '04', name: '雷阵雨', iconNmae: 'leizhenyu' },
+    { n: '05', name: '雷阵雨伴有冰雹', iconNmae: 'leizhenyubanyoubingbao' },
+    { n: '06', name: '雨夹雪', iconNmae: 'yujiaxue' },
+    { n: '07', name: '小雨', iconNmae: 'xiaoyu' },
+    { n: '08', name: '中雨', iconNmae: 'zhongyu' },
+    { n: '09', name: '大雨', iconNmae: 'dayu' },
+    { n: '10', name: '暴雨', iconNmae: 'baoyu' },
+    { n: '11', name: '大暴雨', iconNmae: 'tedabaoyu' },
+    { n: '12', name: '特大暴雨', iconNmae: 'tedabaoyu-D' },
+    { n: '13', name: '阵雪', iconNmae: 'zhenxue' },
+    { n: '14', name: '小雪', iconNmae: 'xiaoxue' },
+    { n: '15', name: '中雪', iconNmae: 'zhongxue' },
+    { n: '16', name: '大雪', iconNmae: 'daxue' },
+    { n: '17', name: '暴雪', iconNmae: 'baoxue' },
+    { n: '18', name: '雾', iconNmae: 'wu' },
+    { n: '19', name: '冻雨', iconNmae: 'dongyu' },
+    { n: '20', name: '沙尘暴', iconNmae: 'shachenbao' },
+    { n: '21', name: '小到中雨', iconNmae: 'zhongyu' },
+    { n: '22', name: '中到大雨', iconNmae: 'dayu' },
+    { n: '23', name: '大到暴雨', iconNmae: 'baoyu' },
+    { n: '24', name: '暴雨到大暴雨', iconNmae: 'tedabaoyu' },
+    { n: '25', name: '大暴雨到特大暴雨', iconNmae: 'tedabaoyu-D' },
+    { n: '26', name: '小到中雪', iconNmae: 'zhongxue' },
+    { n: '27', name: '中到大雪', iconNmae: 'daxue' },
+    { n: '28', name: '大到暴雪', iconNmae: 'baoxue' },
+    { n: '29', name: '浮尘', iconNmae: 'fuchen' },
+    { n: '30', name: '扬沙', iconNmae: 'Group1' },
+    { n: '31', name: '强沙尘暴', iconNmae: 'qiangshachenbao' },
+    { n: '53', name: '霾', iconNmae: 'wumai' },
+    { n: '99', name: '无', iconNmae: '' },
+    { n: '32', name: '浓雾', iconNmae: 'lan-dawu' },
+    { n: '49', name: '强浓雾', iconNmae: 'lan-dawu' },
+    { n: '54', name: '中度霾', iconNmae: 'zhongdumai' },
+    { n: '55', name: '重度霾', iconNmae: 'zhongdumai1' },
+    { n: '56', name: '严重霾', iconNmae: 'yanzhongmai' },
+    { n: '57', name: '大雾', iconNmae: 'lan-dawu' },
+    { n: '58', name: '特强浓雾', iconNmae: 'tianqi-teqiangnongwu' },
+    { n: '301', name: '雨', iconNmae: 'yintian' },
+    { n: '302', name: '雪', iconNmae: 'xiaoxue' },
+    { n: '999', name: '日出', iconNmae: 'rise' },
+    { n: '888', name: '日落', iconNmae: 'set' }
   ]
 };
 // p = [{

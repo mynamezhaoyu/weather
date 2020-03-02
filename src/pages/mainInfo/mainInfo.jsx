@@ -12,7 +12,6 @@ function MainInfo(props) {
     }, 3000);
   }, [arr]);
   useEffect(() => {
-    console.log(props.newWeather.tips);
     setObserve(props.newWeather.observe || {});
     setTips(props.newWeather.tips || {});
   }, [props.newWeather]);
