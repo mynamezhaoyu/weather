@@ -4,6 +4,7 @@ import Header from '../header/header';
 import MainInfo from '../mainInfo/mainInfo';
 import Forecast from '../forecast/forecast';
 import TimeTable from '../timeTable/timeTable';
+import TrendTable from '../trendTable/trendTable';
 import './index.scss';
 /* 
 首页
@@ -44,6 +45,7 @@ function Index() {
       </View>
       <Forecast newWeather={newWeather}></Forecast>
       <TimeTable newWeather={newWeather}></TimeTable>
+      <TrendTable newWeather={newWeather}></TrendTable>
     </View>
   );
 }

@@ -36,10 +36,9 @@ function TimeTable(props) {
       sun
         .filter((r) => r)
         .map((r) => {
-          _arr.splice(r.i + count, 0, { time: r.time, degree: r.name, icon: common.getIconStr(r.type === 1 ? '888' : '999').iconNmae });
+          _arr.splice(r.i + count, 0, { time: r.time, degree: r.name, icon: common.getIconStr(r.type === 1 ? '888' : '999').iconNmae, type: r.type });
           count++;
         });
-      console.log(_arr);
       setArr(_arr);
     }
   }, [props.newWeather]);
@@ -48,8 +47,8 @@ function TimeTable(props) {
       {arr &&
         arr.map((r, i) => {
           return (
-            <View className="list">
-              <View>{moment(r.time).format('HH:mm')}</View>
+            <View className="list" key={String(i)}>
+              <View className="time">{moment(r.time).format('HH:mm')}</View>
               <View>
                 <IconFont name={r.icon} size="50" />
               </View>

@@ -12,6 +12,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    .time {
+      color: #999;
+    }
     .weather {
       font-size: 28px;
     }

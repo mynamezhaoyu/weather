@@ -1,16 +1,15 @@
 .forecast {
   background-color: #fff;
   position: relative;
-  padding: 30px 0;
+  padding: 20px 0;
   color: #434343;
-  font-size: 30px;
+  font-size: 28px;
   display: flex;
-  border-bottom: 1px solid #ccc;
   ::after {
     content: '';
     position: absolute;
     width: 2px;
-    height: 70%;
+    height: 50%;
     background-color: #f0f0f0;
     left: 50%;
     top: 50%;
@@ -23,9 +22,10 @@
     .bottom {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     .top {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 }
