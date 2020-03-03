@@ -8,7 +8,7 @@ let obj = {
   },
   iconStr: [
     { n: '00', name: '晴', iconNmae: 'qingtian' },
-    { n: '01', name: '多云', iconNmae: 'Group' },
+    { n: '01', name: '多云', iconNmae: 'duoyun' },
     { n: '02', name: '阴', iconNmae: 'yintian' },
     { n: '03', name: '阵雨', iconNmae: 'zhenyu' },
     { n: '04', name: '雷阵雨', iconNmae: 'leizhenyu' },

@@ -16,7 +16,7 @@ function Index() {
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
   useEffect(() => {
     Taro.request({
-      url: 'http://localhost:8000/weather'
+      url: 'https://wwxinmao.top/api/weather'
     }).then((res) => {
       let data = res.data.item;
       setNewWeather(data);
@@ -25,7 +25,7 @@ function Index() {
     });
   }, []);
   return (
-    <View>
+    <View className="main">
       <View className="index">
         <Header newWeather={newWeather}></Header>
         <View className="news">
