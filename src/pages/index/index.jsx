@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect } from '@tarojs/taro';
+import Taro, { useState, useEffect, useDidShow } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import Header from '../header/header';
 import MainInfo from '../mainInfo/mainInfo';
@@ -12,22 +12,50 @@ date: 2020-02-25
 */
 function Index() {
   const [bgc, setBac] = useState('#a3d765');
+  const [count, setCount] = useState(0);
   const [newWeather, setNewWeather] = useState({});
   const [observe, setObserve] = useState({});
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
-  useEffect(() => {
+  useDidShow(() => {
+    if (!count) {
+      Taro.setStorage({
+        key: 'active',
+        data: []
+      });
+      setCount(1);
+      fun([]);
+    } else {
+      if (Taro.getStorage) {
+        Taro.getStorage({
+          key: 'active',
+          success: (res) => {
+            fun(res.data.split(','));
+          }
+        });
+      }
+    }
+  });
+  const fun = (params) => {
     Taro.request({
-      url: 'https://wwxinmao.top/api/weather'
+      url: 'https://wwxinmao.top/api/weather',
+      // url: 'http://localhost:8000/weather',
+      method: 'POST',
+      data: {
+        city: params
+      },
+      header: {
+        'content-type': 'application/json'
+      }
     }).then((res) => {
       let data = res.data.item;
       setNewWeather(data);
       setObserve(data.observe);
       setBac(pmcolor[data.air.aqi_level - 1]);
     });
-  }, []);
+  };
   return (
-    <View className="main">
-      <View className="index">
+    <View className="index">
+      <View className="main">
         <Header newWeather={newWeather}></Header>
         <View className="news">
           中央气象台{' '}

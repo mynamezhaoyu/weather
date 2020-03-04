@@ -8,7 +8,7 @@ function TimeTable(props) {
   moment.locale('zh-en');
   const [arr, setArr] = useState([]);
   useEffect(() => {
-    let [_arr, date, week] = [[], ['昨天', '今天', '明天', '后天'], ['周日', '周一', '周二', '周三', '周四', '周五', '周六']];
+    let [_arr, date, week] = [[], ['昨天', '今天', '明天'], ['周日', '周一', '周二', '周三', '周四', '周五', '周六']];
     if (props.newWeather) {
       let forecast = props.newWeather.forecast_24h;
       if (forecast) {

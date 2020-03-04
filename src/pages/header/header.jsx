@@ -12,6 +12,7 @@ function Header(props) {
   }, [props.newWeather]);
   const map = () => {
     let _loc = '芜湖 - 无为';
+    Taro.navigateTo({url:'/pages/select/select'})
     setLoc(_loc);
   };
   return (
