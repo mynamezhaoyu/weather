@@ -12,8 +12,10 @@ function MainInfo(props) {
     }, 3000);
   }, [arr]);
   useEffect(() => {
-    setObserve(props.newWeather.observe || {});
-    setTips(props.newWeather.tips || {});
+    if (props.newWeather) {
+      setObserve(props.newWeather.observe || {});
+      setTips(props.newWeather.tips || {});
+    }
   }, [props.newWeather]);
   return (
     <View className="main-info">

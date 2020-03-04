@@ -6,7 +6,9 @@ function Header(props) {
   const [loc, setLoc] = useState('定位中');
   let [obj, setObj] = useState({});
   useEffect(() => {
-    setObj(props.newWeather.loc || {});
+    if (props.newWeather) {
+      setObj(props.newWeather.loc || {});
+    }
   }, [props.newWeather]);
   const map = () => {
     let _loc = '芜湖 - 无为';
@@ -16,7 +18,9 @@ function Header(props) {
     <View className="header">
       <View onClick={map}>
         <AtIcon value="map-pin" size="15" color="#fff" className="icon"></AtIcon>
-        <Text>{obj[1]} - {obj[2]}</Text>
+        <Text>
+          {obj[1]} - {obj[2]}
+        </Text>
       </View>
     </View>
   );

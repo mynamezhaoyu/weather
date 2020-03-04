@@ -8,22 +8,20 @@ function TimeTable(props) {
   moment.locale('zh-en');
   const [arr, setArr] = useState([]);
   useEffect(() => {
-    let [_arr, forecast, date, week] = [
-      [],
-      props.newWeather.forecast_24h,
-      ['昨天', '今天', '明天', '后天'],
-      ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-    ];
-    if (forecast) {
-      for (let index = 0; index < Object.keys(forecast).length; index++) {
-        if (index < 6) {
-          let r = forecast[index];
-          Object.assign(r, { _time: moment(r.time) });
-          Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
-          _arr.push(r);
+    let [_arr, date, week] = [[], ['昨天', '今天', '明天', '后天'], ['周日', '周一', '周二', '周三', '周四', '周五', '周六']];
+    if (props.newWeather) {
+      let forecast = props.newWeather.forecast_24h;
+      if (forecast) {
+        for (let index = 0; index < Object.keys(forecast).length; index++) {
+          if (index < 6) {
+            let r = forecast[index];
+            Object.assign(r, { _time: moment(r.time) });
+            Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
+            _arr.push(r);
+          }
         }
+        setArr(_arr);
       }
-      setArr(_arr);
     }
   }, [props.newWeather]);
   return (
@@ -41,7 +39,7 @@ function TimeTable(props) {
             );
           })}
       </View>
-      {/* <View className="single">中</View> */}
+      <View className="single"></View>
       <View className="footer">
         {arr &&
           arr.map((r, i) => {
