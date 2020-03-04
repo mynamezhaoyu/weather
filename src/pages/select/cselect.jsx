@@ -1,13 +1,12 @@
 import Taro, { useState, useEffect } from '@tarojs/taro';
 import { Text, View } from '@tarojs/components';
-import { AtSearchBar } from 'taro-ui';
-import { AtList, AtListItem, AtIcon } from 'taro-ui';
-import './select.scss';
+import { AtSearchBar, AtList, AtListItem, AtIcon } from 'taro-ui';
+import './cselect.scss';
 /* 
 搜索页
 date: 2020-03-04
 */
-function Select() {
+function Cselect() {
   let [inputVal, setInputVal] = useState('');
   let [arr, setArr] = useState([]);
   let [logArr, setLogArr] = useState([]);
@@ -18,7 +17,7 @@ function Select() {
         key: 'axiba',
         success: (res) => {
           console.log(res);
-          setLogArr(res.data);
+          setLogArr(res.data || '');
         }
       });
     }
@@ -97,8 +96,6 @@ function Select() {
         }}
         onBlur={() => {
           setIsShow(true);
-          setArr([]);
-          setInputVal('');
         }}
       />
       {arr.map((r, i) => {
@@ -146,4 +143,4 @@ function Select() {
     </View>
   );
 }
-export default Select;
+export default Cselect;

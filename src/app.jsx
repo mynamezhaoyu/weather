@@ -17,7 +17,7 @@ class App extends Component {
   componentDidCatchError() {}
 
   config = {
-    pages: ['pages/index/index', 'pages/select/select'],
+    pages: ['pages/index/index', 'pages/select/cselect'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
