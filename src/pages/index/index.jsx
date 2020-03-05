@@ -5,6 +5,7 @@ import MainInfo from '../mainInfo/mainInfo';
 import Forecast from '../forecast/forecast';
 import TimeTable from '../timeTable/timeTable';
 import TrendTable from '../trendTable/trendTable';
+import common from '../../common/js/common';
 import './index.scss';
 /* 
 首页
@@ -18,27 +19,28 @@ function Index() {
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
   useDidShow(() => {
     if (!count) {
+      Taro.getLocation({
+        type: 'gcj02',
+        success: function(res) {
+          console.log(res);
+        }
+      });
       Taro.setStorage({
         key: 'active',
         data: []
       });
       setCount(1);
       fun([]);
-    } else {
-      if (Taro.getStorage) {
-        Taro.getStorage({
-          key: 'active',
-          success: (res) => {
-            fun(res.data.split(','));
-          }
-        });
-      }
+      return;
     }
+    try {
+      var value = Taro.getStorageSync('active');
+      if (value) fun(value.split(','));
+    } catch (e) {}
   });
   const fun = (params) => {
     Taro.request({
-      url: 'https://wwxinmao.top/api/weather',
-      // url: 'http://localhost:8000/weather',
+      url: common.ajax('weather'),
       method: 'POST',
       data: {
         city: params

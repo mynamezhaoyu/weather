@@ -1,38 +1,43 @@
-import Taro, { useState, useEffect } from '@tarojs/taro';
+import Taro, { useState, useDidShow } from '@tarojs/taro';
 import { Text, View } from '@tarojs/components';
 import { AtSearchBar, AtList, AtListItem, AtIcon } from 'taro-ui';
-import './cselect.scss';
+import common from '../../common/js/common';
+import './select.scss';
 /* 
 搜索页
 date: 2020-03-04
 */
 function Cselect() {
+  // 搜索框数据
   let [inputVal, setInputVal] = useState('');
+  // 搜索结果列表
   let [arr, setArr] = useState([]);
+  // 历史记录数据
   let [logArr, setLogArr] = useState([]);
+  // 切换搜索结果，历史记录列
   let [isShow, setIsShow] = useState(true);
-  useEffect(() => {
-    if (Taro.getStorage) {
-      Taro.getStorage({
-        key: 'axiba',
-        success: (res) => {
-          console.log(res);
-          setLogArr(res.data || '');
-        }
-      });
+  // 第一次进入查找有没有历史记录
+  useDidShow(() => {
+    try {
+      var value = Taro.getStorageSync('logData');
+      if (value) {
+        setLogArr(Array.from(new Set(value)));
+      }
+    } catch (e) {
+      setLogArr([]);
     }
-  }, []);
+  });
   const obj = {
     // 搜索框输入事件
     onChange(val) {
+      if (!val.trim()) return;
       setInputVal(val);
       if (!val) {
         setArr([]);
         return;
       }
       Taro.request({
-        url: 'https://wwxinmao.top/api/selWeather',
-        // url: 'http://localhost:8000/selWeather',
+        url: common.ajax('selWeather'),
         method: 'POST',
         data: {
           city: val
@@ -50,32 +55,28 @@ function Cselect() {
     // 点击取消按钮，返回上一页
     onActionClick() {
       Taro.navigateBack();
+      Taro.setStorage({
+        key: 'active',
+        data: []
+      });
     },
     // 选中事件
     handleClick(i) {
-      let _arr = [];
-      if (Taro.getStorage) {
-        Taro.getStorage({
-          key: 'axiba',
-          success: (res) => {
-            _arr = res.data;
-          }
-        });
-      }
+      let _arr = logArr;
+      // arr[i] 当前选中数据， _arr 取得的历史数据  //把当前数据插入历史数据
       _arr.unshift(arr[i]);
-      if (_arr.length > 3) {
-        // 最要最新的三个
-        _arr.length--;
-      }
+      // 只要最新的三个
+      if (_arr.length > 3) _arr.length--;
       setLogArr(_arr);
       Taro.setStorage({
-        key: 'axiba',
+        key: 'logData',
         data: _arr
       });
       Taro.setStorage({
         key: 'active',
         data: _arr[0]
       });
+      // 清除操作
       setArr([]);
       setInputVal('');
       setIsShow(true);
@@ -109,11 +110,12 @@ function Cselect() {
         <View className="title">
           <Text>历史记录</Text>
           <AtIcon
+            className={logArr.length ? '' : 'none'}
             value="trash"
             size="20"
             onClick={() => {
               Taro.setStorage({
-                key: 'axiba',
+                key: 'logData',
                 data: []
               });
               setLogArr([]);

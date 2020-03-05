@@ -1,10 +1,14 @@
 let obj = {
+  ajax(url) {
+    return `https://wwxinmao.top/api/${url}`;
+    // return `http://localhost:8000/${url}`;
+  },
   getIconStr(num) {
-    let arr = {}
+    let arr = {};
     if (num) {
       arr = this.iconStr.filter((r) => r.n === num)[0];
     }
-    return arr
+    return arr;
   },
   iconStr: [
     { n: '00', name: '晴', iconNmae: 'qingtian' },

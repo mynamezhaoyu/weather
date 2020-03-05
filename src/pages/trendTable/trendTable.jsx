@@ -45,8 +45,8 @@ function TimeTable(props) {
           arr.map((r, i) => {
             return (
               <View className="list" key={String(i)} className={i ? 'list' : 'list ccc'}>
-                <View>{r.night_weather_short}</View>
                 <IconFont name={common.getIconStr(r.night_weather_code).iconNmae} size="50" />
+                <View>{r.night_weather_short}</View>
                 <View>{r.night_wind_direction}</View>
                 <View>{r.night_wind_power + '级'}</View>
               </View>

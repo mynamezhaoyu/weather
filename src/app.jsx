@@ -17,12 +17,17 @@ class App extends Component {
   componentDidCatchError() {}
 
   config = {
-    pages: ['pages/index/index', 'pages/select/cselect'],
+    pages: ['pages/index/index', 'pages/select/select'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '轻天气',
       navigationBarTextStyle: 'black'
+    },
+    permission: {
+      'scope.userLocation': {
+        desc: '第一次使用，我们需要你的位置信息！'
+      }
     }
   };
 

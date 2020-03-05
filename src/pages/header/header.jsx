@@ -3,7 +3,6 @@ import { View, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import './header.scss';
 function Header(props) {
-  const [loc, setLoc] = useState('定位中');
   let [obj, setObj] = useState({});
   useEffect(() => {
     if (props.newWeather) {
@@ -11,17 +10,13 @@ function Header(props) {
     }
   }, [props.newWeather]);
   const map = () => {
-    let _loc = '芜湖 - 无为';
-    Taro.navigateTo({url:'/pages/select/cselect'})
-    setLoc(_loc);
+    Taro.navigateTo({ url: '/pages/select/select' });
   };
   return (
     <View className="header">
       <View onClick={map}>
         <AtIcon value="map-pin" size="15" color="#fff" className="icon"></AtIcon>
-        <Text>
-          {obj[1]} - {obj[2]}
-        </Text>
+        <Text>{obj.length === 2 ? obj[0] + ' - ' + obj[1] : (obj[1] || '').trim() + ' - ' + (obj[2] || '').trim()}</Text>
       </View>
     </View>
   );
