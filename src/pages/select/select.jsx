@@ -55,9 +55,10 @@ function Cselect() {
     // 点击取消按钮，返回上一页
     onActionClick() {
       Taro.navigateBack();
+      // 明确的要求不要刷新
       Taro.setStorage({
-        key: 'active',
-        data: []
+        key: 'isRefresh',
+        data: true
       });
     },
     // 选中事件
