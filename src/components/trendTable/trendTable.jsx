@@ -22,46 +22,71 @@ function TimeTable(props) {
             _arr.push(r);
           }
         }
+        console.log(_arr.map((r) => r.max_degree));
         setArr(_arr);
+        setOption({
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            show: false
+          },
+          yAxis: {
+            type: 'value',
+            show: false
+          },
+          grid: {
+            left: '6%',
+            right: '6%',
+            bottom: '20%',
+            top: '20%',
+            containLabel: false
+          },
+          series: [
+            {
+              type: 'line',
+              smooth: true,
+              symbol: 'circle',
+              symbolSize: 6,
+              data: _arr.map((r) => r.max_degree),
+              itemStyle: {
+                color: '#f0cc35',
+                lineStyle: {
+                  width: 5
+                }
+              },
+              label: {
+                show: true,
+                color: '#434343',
+                fontSize: 14,
+                formatter: (r) => r.value + '°'
+              }
+            },
+            {
+              type: 'line',
+              smooth: true,
+              symbolSize: 6,
+              symbol: 'circle',
+              data: _arr.map((r) => r.min_degree),
+              itemStyle: {
+                color: '#3bbcff',
+                lineStyle: {
+                  width: 5
+                }
+              },
+              label: {
+                show: true,
+                position: 'bottom',
+                color: '#434343',
+                fontSize: 14,
+                formatter: (r) => {
+                  return r.value + '°';
+                }
+              }
+            }
+          ]
+        });
       }
     }
-    setOption({
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        show: false
-      },
-      yAxis: {
-        type: 'value',
-        show: false
-      },
-      grid: {
-        left: '6%',
-        right: '6%',
-        bottom: '0%',
-        top: '0%',
-        containLabel: false
-      },
-      series: [
-        {
-          name: '邮件营销',
-          type: 'line',
-          stack: '总量',
-          smooth: true,
-          data: [120, 132, 101, 134, 90, 230],
-          label: {
-            show: true
-          }
-        },
-        {
-          name: '联盟广告',
-          type: 'line',
-          stack: '总量',
-          smooth: true,
-          data: [220, 182, 191, 234, 290, 330]
-        }
-      ]
-    });
   }, [props.newWeather]);
   return (
     <View className="trend-table">
@@ -78,7 +103,7 @@ function TimeTable(props) {
             );
           })}
       </View>
-      <View className="single">{JSON.stringify(option) !== '{}' && <Echart option={option} />}</View>
+      <View className="single">{JSON.stringify(option) !== '{}' && <Echart option={option} style={'height: 130px'} />}</View>
       <View className="footer">
         {arr &&
           arr.map((r, i) => {
