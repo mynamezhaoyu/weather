@@ -75,7 +75,7 @@ function Cselect() {
       });
       Taro.setStorage({
         key: 'active',
-        data: _arr[0]
+        data: _arr[0].split(',')
       });
       // 清除操作
       setArr([]);
@@ -132,7 +132,7 @@ function Cselect() {
                 onClick={() => {
                   Taro.setStorage({
                     key: 'active',
-                    data: r
+                    data: r.split(',')
                   });
                   Taro.navigateBack();
                 }}

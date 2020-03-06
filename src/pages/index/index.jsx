@@ -1,11 +1,12 @@
-import Taro, { useState, useEffect, useDidShow } from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
+import Taro, { useState, useEffect, useDidShow, useShareAppMessage } from '@tarojs/taro';
+import { View, Text, Button } from '@tarojs/components';
 import Header from '../../components/header/header';
 import MainInfo from '../../components/mainInfo/mainInfo';
 import Forecast from '../../components/forecast/forecast';
 import TimeTable from '../../components/timeTable/timeTable';
 import TrendTable from '../../components/trendTable/trendTable';
 import common from '../../common/js/common';
+import { AtMessage } from 'taro-ui';
 import './index.scss';
 /* 
 首页
@@ -74,7 +75,6 @@ function Index() {
       }
     });
     await new Promise((res) => {
-      console.log(address);
       Taro.setStorage({
         key: 'active',
         data: address
@@ -105,8 +105,17 @@ function Index() {
     }
     init(activeVal);
   });
+
+  useShareAppMessage(() => {
+    return {
+      title: '你的好友为你分享了轻天气',
+      path: 'pages/index/index'
+    };
+  });
+
   return (
     <View className="index">
+      <AtMessage />
       <View className="main">
         <Header newWeather={newWeather}></Header>
         <View className="news">
@@ -117,6 +126,7 @@ function Index() {
               observe.update_time.slice(observe.update_time.length - 2)}
           发布
         </View>
+        <Button></Button>
         <View style={`background-color:` + bgc} className="pm">
           <View className="pmNum">{newWeather.air && newWeather.air.aqi}</View>
           <View className="pmType">{newWeather.air && newWeather.air.aqi_name}</View>
@@ -130,3 +140,6 @@ function Index() {
   );
 }
 export default Index;
+Index.config = {
+  navigationBarTitleText: '首页'
+};

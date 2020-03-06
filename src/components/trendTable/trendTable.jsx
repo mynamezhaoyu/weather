@@ -22,7 +22,6 @@ function TimeTable(props) {
             _arr.push(r);
           }
         }
-        console.log(_arr.map((r) => r.max_degree));
         setArr(_arr);
         setOption({
           xAxis: {
