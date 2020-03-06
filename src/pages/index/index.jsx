@@ -103,7 +103,6 @@ function Index() {
     } catch (e) {
       console.log('报错提示', e);
     }
-    console.log(activeVal);
     init(activeVal);
   });
   return (
