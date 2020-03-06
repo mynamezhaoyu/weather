@@ -36,7 +36,7 @@ function TimeTable(props) {
       sun
         .filter((r) => r)
         .map((r) => {
-          _arr.splice(r.i + count, 0, { time: r.time, degree: r.name, icon: common.getIconStr(r.type === 1 ? '888' : '999').iconNmae, type: r.type });
+          _arr.splice(r.i + count, 0, { time: r.time, degree: r.name, icon: common.getIconStr(r.type === 1 ? '999' : '888').iconNmae, type: r.type });
           count++;
         });
       setArr(_arr);
