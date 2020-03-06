@@ -1,10 +1,10 @@
 import Taro, { useState, useEffect, useDidShow } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import Header from '../header/header';
-import MainInfo from '../mainInfo/mainInfo';
-import Forecast from '../forecast/forecast';
-import TimeTable from '../timeTable/timeTable';
-import TrendTable from '../trendTable/trendTable';
+import Header from '../../components/header/header';
+import MainInfo from '../../components/mainInfo/mainInfo';
+import Forecast from '../../components/forecast/forecast';
+import TimeTable from '../../components/timeTable/timeTable';
+import TrendTable from '../../components/trendTable/trendTable';
 import common from '../../common/js/common';
 import './index.scss';
 /* 
