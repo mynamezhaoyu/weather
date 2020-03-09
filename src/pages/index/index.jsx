@@ -6,7 +6,7 @@ import Forecast from '../../components/forecast/forecast';
 import TimeTable from '../../components/timeTable/timeTable';
 import TrendTable from '../../components/trendTable/trendTable';
 import common from '../../common/js/common';
-import { AtMessage } from 'taro-ui';
+import { AtToast } from 'taro-ui';
 import './index.scss';
 /* 
 首页
@@ -16,6 +16,7 @@ function Index() {
   const [bgc, setBac] = useState('#a3d765');
   const [newWeather, setNewWeather] = useState({});
   const [observe, setObserve] = useState({});
+  const [isOpened, setIsOpened] = useState(false);
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
   const ajaxWeather = (params) => {
     Taro.request({
@@ -83,6 +84,17 @@ function Index() {
       res();
     });
   };
+  useEffect(() => {
+    if (process.env.TARO_ENV !== 'weapp') return;
+    let updateManager = Taro.getUpdateManager();
+    updateManager.onCheckForUpdate((res) => {
+      console.log(res.hasUpdate);
+      setIsOpened(res.hasUpdate);
+    });
+    updateManager.onUpdateReady((res) => {
+      updateManager.applyUpdate();
+    });
+  }, []);
   useDidShow(() => {
     let [isRefresh, activeVal] = [false, []];
     try {
@@ -115,7 +127,7 @@ function Index() {
 
   return (
     <View className="index">
-      <AtMessage />
+      <AtToast isOpened={isOpened} text="检测到有新版本，即将自动更新"></AtToast>
       <View className="main">
         <Header newWeather={newWeather}></Header>
         <View className="news">
