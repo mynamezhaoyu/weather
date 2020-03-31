@@ -28,29 +28,29 @@ function Cselect() {
     }
   });
   const obj = {
+    timer: null,
     // 搜索框输入事件
     onChange(val) {
       if (!val.trim()) return;
-      setInputVal(val);
-      if (!val) {
-        setArr([]);
-        return;
-      }
-      Taro.request({
-        url: common.ajax('selWeather'),
-        method: 'POST',
-        data: {
-          city: val
-        },
-        header: {
-          'content-type': 'application/json'
-        }
-      }).then((res) => {
-        let data = res.data.item;
-        if (Object.keys(data.internal).length) {
-          setArr(Object.values(data.internal));
-        }
-      });
+      if (this.timer) clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        Taro.request({
+          url: common.ajax('selWeather'),
+          method: 'POST',
+          data: {
+            city: val
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        }).then((res) => {
+          let data = res.data.item;
+          if (Object.keys(data.internal).length) {
+            setInputVal(val);
+            setArr(Object.values(data.internal));
+          }
+        });
+      }, 300);
     },
     // 点击取消按钮，返回上一页
     onActionClick() {

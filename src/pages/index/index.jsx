@@ -6,7 +6,7 @@ import Forecast from '../../components/forecast/forecast';
 import TimeTable from '../../components/timeTable/timeTable';
 import TrendTable from '../../components/trendTable/trendTable';
 import common from '../../common/js/common';
-import { AtToast } from 'taro-ui';
+import { AtToast, AtFab } from 'taro-ui';
 import './index.scss';
 /* 
 首页
@@ -88,7 +88,6 @@ function Index() {
     if (process.env.TARO_ENV !== 'weapp') return;
     let updateManager = Taro.getUpdateManager();
     updateManager.onCheckForUpdate((res) => {
-      console.log(res.hasUpdate);
       setIsOpened(res.hasUpdate);
     });
     updateManager.onUpdateReady((res) => {
@@ -139,7 +138,6 @@ function Index() {
               observe.update_time.slice(observe.update_time.length - 2)}
           发布
         </View>
-        <Button></Button>
         <View style={`background-color:` + bgc} className="pm">
           <View className="pmNum">{newWeather.air && newWeather.air.aqi}</View>
           <View className="pmType">{newWeather.air && newWeather.air.aqi_name}</View>

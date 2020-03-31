@@ -13,12 +13,8 @@ function MainInfo(props) {
   }, [arr]);
   useEffect(() => {
     if (props.newWeather) {
-      setObserve((prevState) => {
-        return Object.assign(prevState, props.newWeather.observe || {});
-      });
-      setTips((prevState) => {
-        return Object.assign(prevState, props.newWeather.tips || {});
-      });
+      setObserve(props.newWeather.observe || {});
+      setTips(props.newWeather.tips || {});
     }
   }, [props.newWeather]);
   return (

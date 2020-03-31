@@ -3,12 +3,11 @@ import { View, Text } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import './header.scss';
 function Header(props) {
-  let [obj, setObj] = useState({});
+  let [obj, setObj] = useState([]);
   useEffect(() => {
-    if (props.newWeather) {
-      setObj((prevState) => {
-        return Object.assign(prevState, props.newWeather.loc || {});
-      });
+    if (props.newWeather.loc) {
+      let data = props.newWeather.loc.map((r) => r.trim());
+      setObj(Array.from(new Set(data)) || []);
     }
   }, [props.newWeather]);
   const map = () => {
@@ -18,7 +17,7 @@ function Header(props) {
     <View className="header">
       <View onClick={map}>
         <AtIcon value="map-pin" size="15" color="#fff" className="icon"></AtIcon>
-        <Text>{obj.length === 2 ? obj[0] + ' - ' + obj[1] : (obj[1] || '').trim() + ' - ' + (obj[2] || '').trim()}</Text>
+        <Text>{['加载中...', obj[0], `${obj[0]} - ${obj[1]}`, `${obj[1]} - ${obj[2]}`][obj.length]}</Text>
       </View>
     </View>
   );

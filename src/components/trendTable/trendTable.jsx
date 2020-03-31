@@ -15,12 +15,10 @@ function TimeTable(props) {
       let forecast = props.newWeather.forecast_24h;
       if (forecast) {
         for (let index = 0; index < Object.keys(forecast).length; index++) {
-          if (index < 6) {
-            let r = forecast[index];
-            Object.assign(r, { _time: moment(r.time) });
-            Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
-            _arr.push(r);
-          }
+          let r = forecast[index];
+          Object.assign(r, { _time: moment(r.time) });
+          Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
+          _arr.push(r);
         }
         setArr(_arr);
         setOption((prevState) => {
@@ -90,35 +88,37 @@ function TimeTable(props) {
     }
   }, [props.newWeather]);
   return (
-    <View className="trend-table">
-      <View className="head">
-        {arr &&
-          arr.map((r, i) => {
-            return (
-              <View key={String(i)} className={i ? 'list' : 'list ccc'}>
-                <View>{r.title}</View>
-                <View>{r._time.format('MM/DD')}</View>
-                <View>{r.day_weather}</View>
-                <IconFont name={common.getIconStr(r.day_weather_code).iconNmae} size="50" />
-              </View>
-            );
-          })}
+    <ScrollView className="trend-table-scroll" scrollX="true" scrollAnchoring="true">
+      <View className="trend-table">
+        <View className="head">
+          {arr &&
+            arr.map((r, i) => {
+              return (
+                <View key={String(i)} className={i ? 'list' : 'list ccc'}>
+                  <View>{r.title}</View>
+                  <View>{r._time.format('MM/DD')}</View>
+                  <View>{r.day_weather}</View>
+                  <IconFont name={common.getIconStr(r.day_weather_code).iconNmae} size="50" />
+                </View>
+              );
+            })}
+        </View>
+        <View className="single">{JSON.stringify(option) !== '{}' && <Echart option={option} style={'height: 130px'} />}</View>
+        <View className="footer">
+          {arr &&
+            arr.map((r, i) => {
+              return (
+                <View className="list" key={String(i)} className={i ? 'list' : 'list ccc'}>
+                  <IconFont name={common.getIconStr(r.night_weather_code).iconNmae} size="50" />
+                  <View>{r.night_weather_short}</View>
+                  <View>{r.night_wind_direction}</View>
+                  <View>{r.night_wind_power + '级'}</View>
+                </View>
+              );
+            })}
+        </View>
       </View>
-      <View className="single">{JSON.stringify(option) !== '{}' && <Echart option={option} style={'height: 130px'} />}</View>
-      <View className="footer">
-        {arr &&
-          arr.map((r, i) => {
-            return (
-              <View className="list" key={String(i)} className={i ? 'list' : 'list ccc'}>
-                <IconFont name={common.getIconStr(r.night_weather_code).iconNmae} size="50" />
-                <View>{r.night_weather_short}</View>
-                <View>{r.night_wind_direction}</View>
-                <View>{r.night_wind_power + '级'}</View>
-              </View>
-            );
-          })}
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 export default TimeTable;

@@ -40,9 +40,7 @@ function TimeTable(props) {
           count++;
         });
 
-      setArr((prevState) => {
-        return Object.assign(prevState, _arr);
-      });
+      setArr(_arr);
     }
   }, [props.newWeather]);
   return (
