@@ -6,7 +6,9 @@ function Header(props) {
   let [obj, setObj] = useState({});
   useEffect(() => {
     if (props.newWeather) {
-      setObj(props.newWeather.loc || {});
+      setObj((prevState) => {
+        return Object.assign(prevState, props.newWeather.loc || {});
+      });
     }
   }, [props.newWeather]);
   const map = () => {

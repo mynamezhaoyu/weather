@@ -39,7 +39,10 @@ function TimeTable(props) {
           _arr.splice(r.i + count, 0, { time: r.time, degree: r.name, icon: common.getIconStr(r.type === 1 ? '999' : '888').iconNmae, type: r.type });
           count++;
         });
-      setArr(_arr);
+
+      setArr((prevState) => {
+        return Object.assign(prevState, _arr);
+      });
     }
   }, [props.newWeather]);
   return (

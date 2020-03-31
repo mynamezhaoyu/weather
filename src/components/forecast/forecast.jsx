@@ -8,8 +8,12 @@ function Forecast(props) {
   const [objB, setObjB] = useState({});
   useEffect(() => {
     if (props.newWeather.forecast_24h) {
-      setObjA(props.newWeather.forecast_24h[1] || {});
-      setObjB(props.newWeather.forecast_24h[2] || {});
+      setObjA((prevState) => {
+        return Object.assign(prevState, props.newWeather.forecast_24h[1] || {});
+      });
+      setObjB((prevState) => {
+        return Object.assign(prevState, props.newWeather.forecast_24h[2] || {});
+      });
     }
   }, [props.newWeather]);
 

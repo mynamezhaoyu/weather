@@ -13,8 +13,12 @@ function MainInfo(props) {
   }, [arr]);
   useEffect(() => {
     if (props.newWeather) {
-      setObserve(props.newWeather.observe || {});
-      setTips(props.newWeather.tips || {});
+      setObserve((prevState) => {
+        return Object.assign(prevState, props.newWeather.observe || {});
+      });
+      setTips((prevState) => {
+        return Object.assign(prevState, props.newWeather.tips || {});
+      });
     }
   }, [props.newWeather]);
   return (
@@ -27,7 +31,7 @@ function MainInfo(props) {
           {direction[observe.wind_direction]} {observe.wind_power}级
         </Text>
       </View>
-      <View className="title">{tips.observe && tips.observe[0]}</View>
+      <View className="title">{tips.observe && tips.observe[1]}</View>
     </View>
   );
 }

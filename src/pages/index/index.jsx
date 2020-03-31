@@ -117,13 +117,14 @@ function Index() {
     }
     init(activeVal);
   });
-
-  useShareAppMessage(() => {
-    return {
-      title: '你的好友为你分享了轻天气',
-      path: 'pages/index/index'
-    };
-  });
+  if (process.env.TARO_ENV === 'weapp') {
+    useShareAppMessage(() => {
+      return {
+        title: '你的好友为你分享了轻天气',
+        path: 'pages/index/index'
+      };
+    });
+  }
 
   return (
     <View className="index">

@@ -23,66 +23,68 @@ function TimeTable(props) {
           }
         }
         setArr(_arr);
-        setOption({
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            show: false
-          },
-          yAxis: {
-            type: 'value',
-            show: false
-          },
-          grid: {
-            left: '6%',
-            right: '6%',
-            bottom: '20%',
-            top: '20%',
-            containLabel: false
-          },
-          series: [
-            {
-              type: 'line',
-              smooth: true,
-              symbol: 'circle',
-              symbolSize: 6,
-              data: _arr.map((r) => r.max_degree),
-              itemStyle: {
-                color: '#f0cc35',
-                lineStyle: {
-                  width: 5
-                }
-              },
-              label: {
-                show: true,
-                color: '#434343',
-                fontSize: 14,
-                formatter: (r) => r.value + '°'
-              }
+        setOption((prevState) => {
+          return Object.assign(prevState, {
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              show: false
             },
-            {
-              type: 'line',
-              smooth: true,
-              symbolSize: 6,
-              symbol: 'circle',
-              data: _arr.map((r) => r.min_degree),
-              itemStyle: {
-                color: '#3bbcff',
-                lineStyle: {
-                  width: 5
+            yAxis: {
+              type: 'value',
+              show: false
+            },
+            grid: {
+              left: '6%',
+              right: '6%',
+              bottom: '20%',
+              top: '20%',
+              containLabel: false
+            },
+            series: [
+              {
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: _arr.map((r) => r.max_degree),
+                itemStyle: {
+                  color: '#f0cc35',
+                  lineStyle: {
+                    width: 5
+                  }
+                },
+                label: {
+                  show: true,
+                  color: '#434343',
+                  fontSize: 14,
+                  formatter: (r) => r.value + '°'
                 }
               },
-              label: {
-                show: true,
-                position: 'bottom',
-                color: '#434343',
-                fontSize: 14,
-                formatter: (r) => {
-                  return r.value + '°';
+              {
+                type: 'line',
+                smooth: true,
+                symbolSize: 6,
+                symbol: 'circle',
+                data: _arr.map((r) => r.min_degree),
+                itemStyle: {
+                  color: '#3bbcff',
+                  lineStyle: {
+                    width: 5
+                  }
+                },
+                label: {
+                  show: true,
+                  position: 'bottom',
+                  color: '#434343',
+                  fontSize: 14,
+                  formatter: (r) => {
+                    return r.value + '°';
+                  }
                 }
               }
-            }
-          ]
+            ]
+          });
         });
       }
     }
