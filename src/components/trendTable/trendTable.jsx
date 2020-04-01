@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from '@tarojs/components';
 import IconFont from '../../components/iconfont';
 import common from '../../common/js/common';
 import moment from '../../common/js/moment';
-import { Echart } from 'echarts12';
+// import { Echart } from 'echarts12';
 import './trendTable.scss';
 function TimeTable(props) {
   moment.locale('zh-en');
@@ -20,6 +20,7 @@ function TimeTable(props) {
       _arr.push(r);
     }
     setArr(_arr);
+    if (process.env.TARO_ENV !== 'weapp' || process.env.TARO_ENV !== 'h5') return;
     setOption((prevState) => {
       return Object.assign(prevState, {
         xAxis: {
@@ -100,7 +101,7 @@ function TimeTable(props) {
               );
             })}
         </View>
-        <View className="single">{JSON.stringify(option) !== '{}' && <Echart option={option} style={'height: 130px'} />}</View>
+        <View className="single">{process.env.TARO_ENV !== 'alipay' && JSON.stringify(option) !== '{}' && <Echart option={option} style={'height: 130px'} />}</View>
         <View className="footer">
           {arr &&
             arr.map((r, i) => {

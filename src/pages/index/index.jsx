@@ -64,7 +64,7 @@ function Index() {
             });
           }
         });
-      } else if (process.env.TARO_ENV === 'h5') {
+      } else {
         Taro.request({
           url: 'https://restapi.amap.com/v3/ip?key=2e274b34f0284d295206dd1f8afca37c',
           header: {
