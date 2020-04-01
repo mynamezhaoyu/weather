@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
+import { View, Text, Image } from '@tarojs/components';
 import './mainInfo.scss';
 function MainInfo(props) {
   const [arr, setArr] = useState(true);
@@ -28,6 +28,11 @@ function MainInfo(props) {
         </Text>
       </View>
       <View className="title">{tips.observe && tips.observe[1]}</View>
+
+      <View className="components-page">
+        <Image className="img" src="https://mat1.gtimg.com/pingjs/ext2020/tianqi/mobilev2/61e81da52b26f66c5147a241679a7a24.png" />
+        <Image className="img" src="https://mat1.gtimg.com/pingjs/ext2020/tianqi/mobilev2/1355c59170ff294f7a619d5300cbfb0a.png" />
+      </View>
     </View>
   );
 }

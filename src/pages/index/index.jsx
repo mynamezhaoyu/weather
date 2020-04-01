@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useDidShow, useShareAppMessage } from '@tarojs/taro';
+import Taro, { useState, useEffect, useDidShow, useShareAppMessage, usePullDownRefresh } from '@tarojs/taro';
 import { View, Text, Button } from '@tarojs/components';
 import Header from '../../components/header/header';
 import MainInfo from '../../components/mainInfo/mainInfo';
@@ -6,7 +6,7 @@ import Forecast from '../../components/forecast/forecast';
 import TimeTable from '../../components/timeTable/timeTable';
 import TrendTable from '../../components/trendTable/trendTable';
 import common from '../../common/js/common';
-import { AtToast, AtFab } from 'taro-ui';
+import { AtToast, AtActivityIndicator } from 'taro-ui';
 import './index.scss';
 /* 
 首页
@@ -15,7 +15,7 @@ date: 2020-02-25
 function Index() {
   const [bgc, setBac] = useState('#a3d765');
   const [newWeather, setNewWeather] = useState({});
-  const [observe, setObserve] = useState({});
+  const [activity, setActivity] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
   const ajaxWeather = (params) => {
@@ -29,10 +29,11 @@ function Index() {
         'content-type': 'application/json'
       }
     }).then((res) => {
+      setActivity(false);
       let data = res.data.item;
       setNewWeather(data);
-      setObserve(data.observe);
       setBac(pmcolor[data.air.aqi_level - 1]);
+      Taro.stopPullDownRefresh();
     });
   };
   const init = async (val) => {
@@ -116,6 +117,10 @@ function Index() {
     }
     init(activeVal);
   });
+  usePullDownRefresh(() => {
+    setActivity(true);
+    init(Taro.getStorageSync('active'));
+  });
   if (process.env.TARO_ENV === 'weapp') {
     useShareAppMessage(() => {
       return {
@@ -124,20 +129,14 @@ function Index() {
       };
     });
   }
-
   return (
     <View className="index">
+      <View style={`display:${activity ? 'black' : 'none'}`}>
+        <AtActivityIndicator mode="center" content="刷新中..." size={40} color="#fff"></AtActivityIndicator>
+      </View>
       <AtToast isOpened={isOpened} text="检测到有新版本，即将自动更新"></AtToast>
       <View className="main">
         <Header newWeather={newWeather}></Header>
-        <View className="news">
-          中央气象台{' '}
-          {observe.update_time &&
-            observe.update_time.slice(observe.update_time.length - 4, observe.update_time.length - 2) +
-              ':' +
-              observe.update_time.slice(observe.update_time.length - 2)}
-          发布
-        </View>
         <View style={`background-color:` + bgc} className="pm">
           <View className="pmNum">{newWeather.air && newWeather.air.aqi}</View>
           <View className="pmType">{newWeather.air && newWeather.air.aqi_name}</View>
@@ -152,5 +151,6 @@ function Index() {
 }
 export default Index;
 Index.config = {
-  navigationBarTitleText: '首页'
+  navigationBarTitleText: '首页',
+  enablePullDownRefresh: true
 };

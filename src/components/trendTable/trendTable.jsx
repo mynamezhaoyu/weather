@@ -11,81 +11,78 @@ function TimeTable(props) {
   const [option, setOption] = useState({});
   useEffect(() => {
     let [_arr, date, week] = [[], ['昨天', '今天', '明天'], ['周日', '周一', '周二', '周三', '周四', '周五', '周六']];
-    if (props.newWeather) {
-      let forecast = props.newWeather.forecast_24h;
-      if (forecast) {
-        for (let index = 0; index < Object.keys(forecast).length; index++) {
-          let r = forecast[index];
-          Object.assign(r, { _time: moment(r.time) });
-          Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
-          _arr.push(r);
-        }
-        setArr(_arr);
-        setOption((prevState) => {
-          return Object.assign(prevState, {
-            xAxis: {
-              type: 'category',
-              boundaryGap: false,
-              show: false
-            },
-            yAxis: {
-              type: 'value',
-              show: false
-            },
-            grid: {
-              left: '6%',
-              right: '6%',
-              bottom: '20%',
-              top: '20%',
-              containLabel: false
-            },
-            series: [
-              {
-                type: 'line',
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 6,
-                data: _arr.map((r) => r.max_degree),
-                itemStyle: {
-                  color: '#f0cc35',
-                  lineStyle: {
-                    width: 5
-                  }
-                },
-                label: {
-                  show: true,
-                  color: '#434343',
-                  fontSize: 14,
-                  formatter: (r) => r.value + '°'
-                }
-              },
-              {
-                type: 'line',
-                smooth: true,
-                symbolSize: 6,
-                symbol: 'circle',
-                data: _arr.map((r) => r.min_degree),
-                itemStyle: {
-                  color: '#3bbcff',
-                  lineStyle: {
-                    width: 5
-                  }
-                },
-                label: {
-                  show: true,
-                  position: 'bottom',
-                  color: '#434343',
-                  fontSize: 14,
-                  formatter: (r) => {
-                    return r.value + '°';
-                  }
-                }
-              }
-            ]
-          });
-        });
-      }
+    let forecast = props.newWeather.forecast_24h;
+    if (!forecast) return;
+    for (let index = 0; index < Object.keys(forecast).length; index++) {
+      let r = forecast[index];
+      Object.assign(r, { _time: moment(r.time) });
+      Object.assign(r, { title: date[index] ? date[index] : week[r._time.format('e')] });
+      _arr.push(r);
     }
+    setArr(_arr);
+    setOption((prevState) => {
+      return Object.assign(prevState, {
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          show: false
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        grid: {
+          left: '6%',
+          right: '6%',
+          bottom: '20%',
+          top: '20%',
+          containLabel: false
+        },
+        series: [
+          {
+            type: 'line',
+            smooth: true,
+            symbol: 'circle',
+            symbolSize: 6,
+            data: _arr.map((r) => r.max_degree),
+            itemStyle: {
+              color: '#f0cc35',
+              lineStyle: {
+                width: 5
+              }
+            },
+            label: {
+              show: true,
+              color: '#434343',
+              fontSize: 14,
+              formatter: (r) => r.value + '°'
+            }
+          },
+          {
+            type: 'line',
+            smooth: true,
+            symbolSize: 6,
+            symbol: 'circle',
+            data: _arr.map((r) => r.min_degree),
+            itemStyle: {
+              color: '#3bbcff',
+              lineStyle: {
+                width: 5
+              }
+            },
+            label: {
+              show: true,
+              position: 'bottom',
+              color: '#434343',
+              fontSize: 14,
+              formatter: (r) => {
+                return r.value + '°';
+              }
+            }
+          }
+        ]
+      });
+    });
   }, [props.newWeather]);
   return (
     <ScrollView className="trend-table-scroll" scrollX="true" scrollAnchoring="true">

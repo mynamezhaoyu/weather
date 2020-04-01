@@ -7,10 +7,9 @@ function Forecast(props) {
   const [objA, setObjA] = useState({});
   const [objB, setObjB] = useState({});
   useEffect(() => {
-    if (props.newWeather.forecast_24h) {
-      setObjA(props.newWeather.forecast_24h[1] || {});
-      setObjB(props.newWeather.forecast_24h[2] || {});
-    }
+    if (!props.newWeather.forecast_24h) return;
+    setObjA(props.newWeather.forecast_24h[1] || {});
+    setObjB(props.newWeather.forecast_24h[2] || {});
   }, [props.newWeather]);
 
   return (

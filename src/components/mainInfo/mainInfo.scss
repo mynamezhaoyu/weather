@@ -1,5 +1,6 @@
 .main-info {
   text-align: center;
+  position: relative;
   padding-bottom: 40%;
   .temperature {
     // 温度
@@ -43,6 +44,17 @@
   .title {
     font-size: 32px;
     margin-top: 10%;
+  }
+  .components-page {
+    .img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      z-index: 1;
+      height: 30%;
+    }
   }
 }
 @keyframes wind-show {

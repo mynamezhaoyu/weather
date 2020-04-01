@@ -19,16 +19,16 @@ class App extends Component {
   config = {
     pages: ['pages/index/index', 'pages/select/select'],
     window: {
-      backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '轻天气',
       navigationBarTextStyle: 'black'
     },
     permission: {
       'scope.userLocation': {
-        desc: '第一次使用，我们需要你的位置信息！'
+        desc: '欢迎使用轻天气，我们需要你授权地理位置信息！'
       }
-    }
+    },
+    requiredBackgroundModes: ['audio']
   };
 
   // 在 App 类中的 render() 函数没有实际作用
