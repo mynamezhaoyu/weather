@@ -14,9 +14,10 @@ date: 2020-02-25
 */
 function Index() {
   const [bgc, setBac] = useState('#a3d765');
-  const [newWeather, setNewWeather] = useState({});
+  const [newWeather, setNewWeather] = useState(false);
   const [activity, setActivity] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
+  const [num, setNum] = useState(0);
   const pmcolor = ['#a3d765', '#f0cc35', '#f1ab62', '#ef7f77', '#b28ccb'];
   const ajaxWeather = (params) => {
     Taro.request({
@@ -36,14 +37,9 @@ function Index() {
       Taro.stopPullDownRefresh();
     });
   };
-  const init = async (val) => {
+  const local = () => {
     let address = [];
-    // 如果有当前焦点地址，那就不需要调用地址了。证明肯定不是第一次用。
-    if (val.length) {
-      ajaxWeather(Array.isArray(val) ? val : val.split(','));
-      return;
-    }
-    await new Promise((res) => {
+    return new Promise((resolve) => {
       if (process.env.TARO_ENV === 'weapp') {
         Taro.getLocation({
           type: 'gcj02',
@@ -60,7 +56,7 @@ function Index() {
               } else {
                 address.push(_data.province, _data.city, _data.district);
               }
-              res();
+              resolve(address);
             });
           }
         });
@@ -72,26 +68,60 @@ function Index() {
           }
         }).then((data) => {
           address.push(data.data.province, data.data.city);
-          res();
+          resolve(address);
         });
       }
     });
-    await new Promise((res) => {
+  };
+  const init = async (val) => {
+    let address = [];
+    // 如果有当前焦点地址，那就不需要调用地址了。证明肯定不是第一次用。
+    if (val.length) {
+      ajaxWeather(Array.isArray(val) ? val : val.split(','));
+      return;
+    }
+    address = await local();
+    await new Promise((resolve) => {
       Taro.setStorage({
         key: 'active',
         data: address
       });
       ajaxWeather(address);
-      res();
+      resolve();
     });
   };
   useEffect(() => {
+    local().then((data) => {
+      let activeVal = [];
+      try {
+        activeVal = Taro.getStorageSync('active');
+      } catch (e) {
+        console.log('报错提示', e);
+      }
+      if (activeVal.length && !data[0].includes(activeVal[0])) {
+        Taro.showModal({
+          title: '温馨提醒',
+          content: '检测到你的位置信息变化，是否更改到当前地址天气？',
+          success: (confirm) => {
+            if (confirm) {
+              init(data);
+              Taro.setStorage({
+                key: 'active',
+                data: data
+              });
+            }
+          }
+        });
+      }
+    });
+    setNum(Taro.$navBarMarginTop);
     if (process.env.TARO_ENV !== 'weapp') return;
+    // 检查更新
     let updateManager = Taro.getUpdateManager();
     updateManager.onCheckForUpdate((res) => {
       setIsOpened(res.hasUpdate);
     });
-    updateManager.onUpdateReady((res) => {
+    updateManager.onUpdateReady(() => {
       updateManager.applyUpdate();
     });
   }, []);
@@ -135,22 +165,29 @@ function Index() {
         <AtActivityIndicator mode="center" content="刷新中..." size={40} color="#fff"></AtActivityIndicator>
       </View>
       <AtToast isOpened={isOpened} text="检测到有新版本，即将自动更新"></AtToast>
-      <View className="main">
-        <Header newWeather={newWeather}></Header>
-        <View style={`background-color:` + bgc} className="pm">
-          <View className="pmNum">{newWeather.air && newWeather.air.aqi}</View>
-          <View className="pmType">{newWeather.air && newWeather.air.aqi_name}</View>
+      {newWeather && (
+        <View>
+          <View className="main">
+            <View style={`padding-top:` + `${num}px`}>
+              <Header newWeather={newWeather}></Header>
+            </View>
+            <View style={`background-color:` + bgc} className="pm">
+              <View className="pmNum">{newWeather.air && newWeather.air.aqi}</View>
+              <View className="pmType">{newWeather.air && newWeather.air.aqi_name}</View>
+            </View>
+            <MainInfo newWeather={newWeather}></MainInfo>
+          </View>
+          <Forecast newWeather={newWeather}></Forecast>
+          <TimeTable newWeather={newWeather}></TimeTable>
+          <TrendTable newWeather={newWeather}></TrendTable>
         </View>
-        <MainInfo newWeather={newWeather}></MainInfo>
-      </View>
-      <Forecast newWeather={newWeather}></Forecast>
-      <TimeTable newWeather={newWeather}></TimeTable>
-      <TrendTable newWeather={newWeather}></TrendTable>
+      )}
     </View>
   );
 }
 export default Index;
 Index.config = {
   navigationBarTitleText: '首页',
-  enablePullDownRefresh: true
+  enablePullDownRefresh: true,
+  navigationStyle: 'custom'
 };

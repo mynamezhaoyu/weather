@@ -8,7 +8,11 @@ import './app.scss';
 //   require('nerv-devtools')
 // }
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.getSystemInfo({}).then((res) => {
+      Taro.$navBarMarginTop = res.statusBarHeight || 0;
+    });
+  }
 
   componentDidShow() {}
 
