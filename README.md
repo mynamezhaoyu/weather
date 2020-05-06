@@ -1,6 +1,6 @@
 # 轻天气
 ## 微信小程序搜索使用，或直接微信扫一扫
-![image](https://github.com/mynamezhaoyu/weather/blob/master/md/3.png)
+![image](http://q9wga56zc.bkt.clouddn.com/3.jpg?e=1588755554&token=8jpX2y4G8cxgGIM9WZdO8m1uUijBmXEcDW89ekL9:n3gA-LkjwgkzhPPTBOADL7WGTi8=&attname=)
 
 
 1. 主要：
@@ -15,6 +15,6 @@
     - 但是这个接口有时候会莫名其妙的挂掉。所以自己用node转了一下[https://wwxinmao.top/api/weather](https://wwxinmao.top/api/weather)
 
 ## 图片展示
-![image](https://github.com/mynamezhaoyu/weather/blob/master/md/1.png)
+![image](http://q9wga56zc.bkt.clouddn.com/1.jpg?e=1588755554&token=8jpX2y4G8cxgGIM9WZdO8m1uUijBmXEcDW89ekL9:ivVWBU3bvu7OnULeNsIAy7ZqK7s=&attname=)
 
-![image](https://github.com/mynamezhaoyu/weather/blob/master/md/2.png)
+![image](http://q9wga56zc.bkt.clouddn.com/2.jpg?e=1588755554&token=8jpX2y4G8cxgGIM9WZdO8m1uUijBmXEcDW89ekL9:F8SnfIUi2RjBLLpPBxdWCjGFp9g=&attname=)
